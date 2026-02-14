@@ -14,9 +14,16 @@ class ShoppingCart extends StatefulWidget {
 }
 
 class _ShoppingCartState extends State<ShoppingCart> {
+  double calculateTotal(List<Map> cart) {
+    double total_price = 0;
+    for (var item in cart) {
+      total_price += item['price'] * item['quantity'];
+    }
+    return total_price;
+  }
+
   @override
   Widget build(BuildContext context) {
-    // cart = Data
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -29,7 +36,6 @@ class _ShoppingCartState extends State<ShoppingCart> {
         ),
         leading: Icon(Icons.menu, color: Colors.white, size: 30),
         backgroundColor: AppColors().darkGreen,
-        //centerTitle: true,
       ),
       backgroundColor: AppColors().darkGreen,
       body: Padding(
@@ -63,113 +69,157 @@ class _ShoppingCartState extends State<ShoppingCart> {
               ),
               Divider(thickness: 2, height: 1, color: AppColors().black),
               Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                  child: StreamBuilder(
-                    stream: DataBase().supabase
-                        .from('cart')
-                        .stream(primaryKey: ['id'])
-                        .eq(
-                          'user_id',
-                          DataBase().supabase.auth.currentUser!.id,
+                child: StreamBuilder(
+                  stream: DataBase().supabase
+                      .from('cart')
+                      .stream(primaryKey: ['id'])
+                      .order('product_id'),
+                  builder: (context, asyncSnapshot) {
+                    if (!asyncSnapshot.hasData) {
+                      return Center(child: CircularProgressIndicator());
+                    }
+
+                    final cart = asyncSnapshot.data!;
+                    double total = calculateTotal(cart);
+
+                    if (cart.isEmpty) {
+                      return Padding(
+                        padding: const EdgeInsets.only(top: 40),
+                        child: Text(
+                          "Your cart is empty",
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: AppColors().grey,
+                          ),
                         ),
-                    builder: (context, asyncSnapshot) {
-                      if (!asyncSnapshot.hasData) {
-                        return Center(child: CircularProgressIndicator());
-                      }
+                      );
+                    }
 
-                      final cart = asyncSnapshot.data!;
-
-                      return ListView.builder(
-                        itemCount: cart.length,
-                        itemBuilder: (context, index) {
-                          final localProduct = GroceriesModel.fromjson(
-                            LocalProducts.products.firstWhere(
-                              (products) =>
-                                  products['id'] == cart[index]['product_id'],
-                            ),
-                          );
-                          return Column(
-                            children: [
-                              Container(
-                                height: 120,
-                                decoration: BoxDecoration(
-                                  color: AppColors().creamBg,
-                                ),
-                                child: Row(
+                    return Column(
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 30),
+                            child: ListView.builder(
+                              itemCount: cart.length,
+                              itemBuilder: (context, index) {
+                                final localProduct = GroceriesModel.fromjson(
+                                  LocalProducts.products.firstWhere(
+                                    (products) =>
+                                        products['id'] ==
+                                        cart[index]['product_id'],
+                                  ),
+                                );
+                                return Column(
                                   children: [
-                                    Image.network(
-                                      "${localProduct.thumbnail ?? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFE6P1LXtPr62C4PvWj1pF_740Wa3RKhyxFw&s"}",
+                                    Container(
                                       height: 120,
-                                      width: 120,
-                                      fit: BoxFit.contain,
-                                    ),
-                                    SizedBox(width: 20),
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          "${localProduct.title}",
-                                          style: TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold,
+                                      decoration: BoxDecoration(
+                                        color: AppColors().creamBg,
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          Image.network(
+                                            "${localProduct.thumbnail ?? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFE6P1LXtPr62C4PvWj1pF_740Wa3RKhyxFw&s"}",
+                                            height: 120,
+                                            width: 120,
+                                            fit: BoxFit.contain,
                                           ),
-                                        ),
-                                        SizedBox(height: 10),
+                                          SizedBox(width: 20),
+                                          Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                "${localProduct.title}",
+                                                style: TextStyle(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              SizedBox(height: 10),
 
-                                        Text(
-                                          "\$ ${cart[index]['price'] * cart[index]['quantity']}",
-                                          style: TextStyle(
-                                            color: AppColors().green,
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold,
+                                              Text(
+                                                "\$ ${cart[index]['price'] * cart[index]['quantity']}",
+                                                style: TextStyle(
+                                                  color: AppColors().green,
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                        ),
-                                      ],
+                                          Spacer(),
+                                          Row(
+                                            children: [
+                                              CartCounter(
+                                                icon: Icons.remove,
+                                                func: () =>
+                                                    DataBase().removeFromCart(
+                                                      productId:
+                                                          cart[index]['product_id'],
+                                                    ),
+                                              ),
+                                              SizedBox(width: 8),
+                                              Text(
+                                                '${cart[index]['quantity']} kg',
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
+                                              SizedBox(width: 8),
+                                              CartCounter(
+                                                icon: Icons.add,
+                                                func: () => DataBase().addToCart(
+                                                  productId:
+                                                      cart[index]['product_id'],
+                                                  price: cart[index]['price'],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                    Spacer(),
-                                    Row(
-                                      children: [
-                                        CartCounter(
-                                          icon: Icons.remove,
-                                          func: () => DataBase().removeFromCart(
-                                            productId:
-                                                cart[index]['product_id'],
-                                          ),
-                                        ),
-                                        SizedBox(width: 8),
-                                        Text(
-                                          '${cart[index]['quantity']} kg',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                        SizedBox(width: 8),
-                                        CartCounter(
-                                          icon: Icons.add,
-                                          func: () => DataBase().addToCart(
-                                            productId:
-                                                cart[index]['product_id'],
-                                            price: cart[index]['price'],
-                                          ),
-                                        ),
-                                      ],
+                                    Divider(
+                                      thickness: 0.5,
+                                      height: 5,
+                                      color: AppColors().grey.shade400,
                                     ),
                                   ],
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                        Container(
+                          height: 90,
+                          padding: EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                            color: AppColors().lightGrenn,
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(40),
+                              topRight: Radius.circular(40),
+                            ),
+                          ),
+                          child: Row(
+                            //crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Total = ${calculateTotal(cart)}',
+                                style: TextStyle(
+                                  color: AppColors().black,
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              Divider(
-                                thickness: 0.5,
-                                height: 5,
-                                color: AppColors().grey.shade400,
-                              ),
+                              
                             ],
-                          );
-                        },
-                      );
-                    },
-                  ),
+                          ),
+                        ),
+                      ],
+                    );
+                  },
                 ),
               ),
             ],

@@ -85,47 +85,7 @@ class _LogInScreenState extends State<LogInScreen> {
                   SizedBox(
                     height: 60,
                     width: 300,
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        if (emailController.text.isEmpty ||
-                            passwordController.text.isEmpty) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text("Please fill in all fields"),
-                            ),
-                          );
-                          return;
-                        }
-                        try {
-                          await DataBase().login(
-                            email: emailController.text,
-                            password: passwordController.text,
-                          );
-
-                          if (mounted) {
-                            context.navToScreen(ProductsListScreen());
-                          }
-                        } catch (e) {
-                          ScaffoldMessenger.of(
-                            context,
-                          ).showSnackBar(SnackBar(content: Text("Error $e")));
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors().black,
-                        foregroundColor: AppColors().creamBg,
-                        minimumSize: const Size(double.infinity, 55),
-                        elevation: 0,
-                      ),
-                      child: Text(
-                        "Log In",
-                        style: TextStyle(
-                          color: AppColors().creamBg,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
+                    child: navButton(emailController: emailController, passwordController: passwordController, mounted: mounted),
                   ),
                   SizedBox(height: context.screenHeight * 0.03),
                   Row(
@@ -156,6 +116,64 @@ class _LogInScreenState extends State<LogInScreen> {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class navButton extends StatelessWidget {
+  const navButton({
+    super.key,
+    required this.emailController,
+    required this.passwordController,
+    required this.mounted,
+  });
+
+  final TextEditingController emailController;
+  final TextEditingController passwordController;
+  final bool mounted;
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () async {
+        if (emailController.text.isEmpty ||
+            passwordController.text.isEmpty) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text("Please fill in all fields"),
+            ),
+          );
+          return;
+        }
+        try {
+          await DataBase().login(
+            email: emailController.text,
+            password: passwordController.text,
+          );
+    
+          if (mounted) {
+            context.navToScreen(ProductsListScreen());
+          }
+        } catch (e) {
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text("Error $e")));
+        }
+      },
+      style: ElevatedButton.styleFrom(
+        backgroundColor: AppColors().black,
+        foregroundColor: AppColors().creamBg,
+        minimumSize: const Size(double.infinity, 55),
+        elevation: 0,
+      ),
+      child: Text(
+        "Log In",
+        style: TextStyle(
+          color: AppColors().creamBg,
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
         ),
       ),
     );
