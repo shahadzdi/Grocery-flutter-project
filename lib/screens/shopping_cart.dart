@@ -31,12 +31,12 @@ class _ShoppingCartState extends State<ShoppingCart> {
         title: Text(
           'Shopping cart',
           style: TextStyle(
-            color: Colors.white,
+            color: AppColors().creamBg,
             fontSize: 30,
             fontWeight: FontWeight.bold,
           ),
         ),
-        leading: Icon(Icons.menu, color: Colors.white, size: 30),
+        leading: Icon(Icons.menu, color: AppColors().creamBg, size: 30),
         backgroundColor: AppColors().darkGreen,
       ),
       backgroundColor: AppColors().darkGreen,
@@ -63,13 +63,13 @@ class _ShoppingCartState extends State<ShoppingCart> {
                       style: TextStyle(
                         fontSize: 21,
                         fontWeight: FontWeight.bold,
-                        color: AppColors().black,
+                        color: AppColors().darkGreen,
                       ),
                     ),
                   ],
                 ),
               ),
-              Divider(thickness: 2, height: 1, color: AppColors().black),
+              Divider(thickness: 2, height: 1, color: AppColors().darkGreen),
               Expanded(
                 child: StreamBuilder(
                   stream: DataBase().supabase
@@ -78,7 +78,11 @@ class _ShoppingCartState extends State<ShoppingCart> {
                       .order('product_id'),
                   builder: (context, asyncSnapshot) {
                     if (!asyncSnapshot.hasData) {
-                      return Center(child: CircularProgressIndicator());
+                      return Center(
+                        child: CircularProgressIndicator(
+                          color: AppColors().orange,
+                        ),
+                      );
                     }
 
                     final cart = asyncSnapshot.data!;

@@ -5,6 +5,7 @@ import 'package:grocery/extensions/screen_size.dart';
 import 'package:grocery/models/groceries_model.dart';
 import 'package:grocery/services/database.dart';
 import 'package:grocery/widgets/bottom_nav_bar.dart';
+import 'package:grocery/widgets/offer_box.dart';
 import 'package:grocery/widgets/text_filed_widget.dart';
 
 class ProductsListScreen extends StatefulWidget {
@@ -70,58 +71,10 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
               ),
               SizedBox(height: 30),
 
-              // offer box
-              Container(
-                width: double.infinity,
-                height: 160,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [AppColors().green, Colors.lightGreen.shade200],
-                  ),
-                  borderRadius: BorderRadius.circular(25),
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 50),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text(
-                              "Fresh fruits",
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            SizedBox(height: 5),
-                            Text(
-                              "30% OFF",
-                              style: TextStyle(
-                                fontSize: 28,
-                                fontWeight: FontWeight.w900,
-                                color: AppColors().creamBg,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+              OffersBox(),
 
-                    Padding(
-                      padding: const EdgeInsets.only(right: 50),
-                      child: Image.asset(
-                        "assets/images/vegetables.png",
-                        height: 140,
-                        fit: BoxFit.contain,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
               SizedBox(height: 30),
+              
               GridView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
