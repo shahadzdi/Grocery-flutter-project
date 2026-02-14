@@ -4,7 +4,7 @@ class GroceriesModel {
   String? description;
   double? stock;
   double? price;
-  double? rating;
+  //double? rating;
   String? thumbnail;
 
   GroceriesModel({
@@ -13,7 +13,7 @@ class GroceriesModel {
     this.description,
     this.stock,
     this.price,
-    this.rating,
+    //this.rating,
     this.thumbnail,
   });
 
@@ -22,10 +22,10 @@ class GroceriesModel {
       id: json['id'],
       title: json['title'],
       description: json['description'],
-      stock: json['stock'],
-      price: json['price'],
+      stock: (json['stock'] as num).toDouble(),
+      price: (json['price'] as num).toDouble(),
       thumbnail: json['thumbnail'],
-      rating: json['rating'],
+      //rating: json['rating'],
     );
   }
 }

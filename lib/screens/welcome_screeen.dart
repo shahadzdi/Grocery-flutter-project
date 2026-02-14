@@ -4,6 +4,7 @@ import 'package:grocery/constants/colors.dart';
 import 'package:grocery/extensions/nav.dart';
 import 'package:grocery/extensions/screen_size.dart';
 import 'package:grocery/screens/log_in_screen.dart';
+import 'package:grocery/widgets/nav_button.dart';
 
 class Welcomescreeen extends StatelessWidget {
   const Welcomescreeen({super.key});
@@ -17,7 +18,7 @@ class Welcomescreeen extends StatelessWidget {
         children: [
           Container(
             padding: EdgeInsets.only(top: 60),
-            height: context.screenHeight * 0.3,
+            height: context.screenHeight * 0.35,
             child: Column(
               children: [
                 Text(
@@ -63,24 +64,13 @@ class Welcomescreeen extends StatelessWidget {
                   SizedBox(
                     height: 60,
                     width: 300,
-                    child: ElevatedButton(
+                    child: NavButton(
+                      backgroundColor: AppColors().black,
+                      text: "Start",
+                      textColor: AppColors().creamBg,
                       onPressed: () {
                         context.navToScreen(LogInScreen());
                       },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors().black,
-                        foregroundColor: AppColors().creamBg,
-                        minimumSize: const Size(double.infinity, 55),
-                        elevation: 0,
-                      ),
-                      child: Text(
-                        "Start",
-                        style: TextStyle(
-                          color: AppColors().creamBg,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
                     ),
                   ),
                 ],

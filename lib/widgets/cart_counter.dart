@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:grocery/constants/colors.dart';
+import 'package:grocery/extensions/screen_size.dart';
 
 class CartCounter extends StatelessWidget {
   final IconData icon;
@@ -14,13 +15,17 @@ class CartCounter extends StatelessWidget {
       },
       child: Container(
         padding: const EdgeInsets.all(6),
-        height: 30,
-        width: 30,
+        height: context.screenHeight * 0.03,
+        width: context.screenHeight * 0.03,
         decoration: BoxDecoration(
           color: AppColors().green,
           borderRadius: BorderRadius.circular(10),
         ),
-        child: Icon(icon, color: Colors.white, size: 18),
+        child: Icon(
+          icon,
+          color: Colors.white,
+          size: context.screenHeight * 0.016,
+        ),
       ),
     );
   }

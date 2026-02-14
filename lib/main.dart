@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:grocery/screens/products_list_screen.dart';
-import 'package:grocery/screens/shopping_cart.dart';
 import 'package:grocery/screens/welcome_screeen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -21,4 +19,5 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(home: Welcomescreeen());
   }
+
 }

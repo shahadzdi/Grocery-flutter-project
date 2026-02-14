@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:grocery/constants/colors.dart';
 import 'package:grocery/data/products.dart';
+import 'package:grocery/extensions/screen_size.dart';
 import 'package:grocery/models/groceries_model.dart';
 import 'package:grocery/services/database.dart';
 import 'package:grocery/widgets/bottom_nav_bar.dart';
@@ -43,7 +44,7 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
       ),
       backgroundColor: AppColors().darkGreen,
       body: Padding(
-        padding: const EdgeInsets.only(top: 30, left: 30, right: 30),
+        padding: const EdgeInsets.only(top: 30, left: 25, right: 25),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -126,10 +127,10 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: products.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 0.8,
-                  crossAxisSpacing: 25,
-                  mainAxisSpacing: 25,
+                  crossAxisCount: 3,
+                  childAspectRatio: 0.7,
+                  crossAxisSpacing: 12,
+                  mainAxisSpacing: 12,
                 ),
                 itemBuilder: (context, index) {
                   return Container(
@@ -150,9 +151,9 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
                         ),
                         Padding(
                           padding: const EdgeInsets.only(
-                            left: 20,
-                            right: 20,
-                            bottom: 8,
+                            left: 10,
+                            right: 10,
+                            bottom: 10,
                           ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -160,7 +161,7 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
                               Text(
                                 products[index].title ?? 'no title',
                                 style: TextStyle(
-                                  fontSize: 18,
+                                  fontSize: context.screenHeight * 0.016, // 16
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -171,7 +172,7 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
                                     ? "Low stock"
                                     : "",
                                 style: TextStyle(
-                                  fontSize: 12,
+                                  fontSize: context.screenHeight * 0.01, //12
                                   color:
                                       products[index].stock! == 0 ||
                                           products[index].stock! < 10
@@ -186,7 +187,8 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
                                   Text(
                                     "\$ ${products[index].price ?? "unknouwn price"}",
                                     style: TextStyle(
-                                      fontSize: 20,
+                                      fontSize:
+                                          context.screenHeight * 0.016, // 16
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -229,8 +231,9 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
                                           },
                                           child: Container(
                                             padding: const EdgeInsets.all(6),
-                                            height: 45,
-                                            width: 45,
+                                            height:
+                                                context.screenHeight * 0.035,
+                                            width: context.screenHeight * 0.035,
                                             decoration: BoxDecoration(
                                               color: AppColors().green,
                                               borderRadius:
@@ -239,7 +242,7 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
                                             child: Icon(
                                               Icons.add,
                                               color: Colors.white,
-                                              size: 30,
+                                              size: context.screenHeight * 0.02,
                                             ),
                                           ),
                                         ),

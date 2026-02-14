@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:grocery/constants/colors.dart';
 import 'package:grocery/data/products.dart';
+import 'package:grocery/extensions/screen_size.dart';
 import 'package:grocery/models/groceries_model.dart';
 import 'package:grocery/services/database.dart';
 import 'package:grocery/widgets/bottom_nav_bar.dart';
 import 'package:grocery/widgets/cart_counter.dart';
+import 'package:grocery/widgets/nav_button.dart';
 
 class ShoppingCart extends StatefulWidget {
   const ShoppingCart({super.key});
@@ -52,14 +54,14 @@ class _ShoppingCartState extends State<ShoppingCart> {
             children: [
               Container(
                 height: 40,
-                margin: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
                       "Order details",
                       style: TextStyle(
-                        fontSize: 25,
+                        fontSize: 21,
                         fontWeight: FontWeight.bold,
                         color: AppColors().black,
                       ),
@@ -99,7 +101,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
                       children: [
                         Expanded(
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 30),
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
                             child: ListView.builder(
                               itemCount: cart.length,
                               itemBuilder: (context, index) {
@@ -113,7 +115,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
                                 return Column(
                                   children: [
                                     Container(
-                                      height: 120,
+                                      height: 90,
                                       decoration: BoxDecoration(
                                         color: AppColors().creamBg,
                                       ),
@@ -121,29 +123,37 @@ class _ShoppingCartState extends State<ShoppingCart> {
                                         children: [
                                           Image.network(
                                             "${localProduct.thumbnail ?? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFE6P1LXtPr62C4PvWj1pF_740Wa3RKhyxFw&s"}",
-                                            height: 120,
-                                            width: 120,
+                                            height: context.screenHeight * 0.1,
+                                            width:
+                                                context.screenHeight *
+                                                0.1, //120,
                                             fit: BoxFit.contain,
                                           ),
-                                          SizedBox(width: 20),
+                                          SizedBox(width: 10),
                                           Column(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
                                               Text(
                                                 "${localProduct.title}",
                                                 style: TextStyle(
-                                                  fontSize: 18,
+                                                  fontSize:
+                                                      context.screenHeight *
+                                                      0.016, // 16
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                               ),
-                                              SizedBox(height: 10),
+                                              SizedBox(height: 6),
 
                                               Text(
                                                 "\$ ${cart[index]['price'] * cart[index]['quantity']}",
                                                 style: TextStyle(
                                                   color: AppColors().green,
-                                                  fontSize: 18,
+                                                  fontSize:
+                                                      context.screenHeight *
+                                                      0.016, // 16
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                               ),
@@ -162,9 +172,12 @@ class _ShoppingCartState extends State<ShoppingCart> {
                                               ),
                                               SizedBox(width: 8),
                                               Text(
-                                                '${cart[index]['quantity']} kg',
+                                                '${cart[index]['quantity']}',
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.w600,
+                                                  fontSize:
+                                                      context.screenHeight *
+                                                      0.016, // 16
                                                 ),
                                               ),
                                               SizedBox(width: 8),
@@ -196,24 +209,38 @@ class _ShoppingCartState extends State<ShoppingCart> {
                           height: 90,
                           padding: EdgeInsets.all(20),
                           decoration: BoxDecoration(
-                            color: AppColors().lightGrenn,
+                            color: AppColors().creamBg,
                             borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(40),
                               topRight: Radius.circular(40),
                             ),
+                            border: BoxBorder.fromLTRB(
+                              top: BorderSide(
+                                color: AppColors().grey,
+                                width: 1,
+                              ),
+                            ),
                           ),
                           child: Row(
-                            //crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                'Total = ${calculateTotal(cart)}',
+                                'Total = \$ ${total.toStringAsFixed(2)}',
                                 style: TextStyle(
                                   color: AppColors().black,
-                                  fontSize: 22,
+                                  fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              
+                              SizedBox(width: 20),
+                              Expanded(
+                                child: NavButton(
+                                  text: "Checkout",
+                                  backgroundColor: AppColors().orange,
+                                  textColor: AppColors().darkGreen,
+                                  onPressed: () {},
+                                ),
+                              ),
                             ],
                           ),
                         ),

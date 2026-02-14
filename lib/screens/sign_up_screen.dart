@@ -4,6 +4,7 @@ import 'package:grocery/extensions/nav.dart';
 import 'package:grocery/extensions/screen_size.dart';
 import 'package:grocery/screens/log_in_screen.dart';
 import 'package:grocery/services/database.dart';
+import 'package:grocery/widgets/nav_button.dart';
 import 'package:grocery/widgets/text_filed_widget.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -143,7 +144,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   SizedBox(
                     height: 60,
                     width: 300,
-                    child: ElevatedButton(
+                    child: NavButton(
+                      text: "Sign Up",
+                      textColor: AppColors().creamBg,
+                      backgroundColor: AppColors().black,
                       onPressed: () async {
                         setState(() {
                           emailError = emailController.text.isEmpty
@@ -179,20 +183,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ).showSnackBar(SnackBar(content: Text("Error $e")));
                         }
                       },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors().black,
-                        foregroundColor: AppColors().creamBg,
-                        minimumSize: const Size(double.infinity, 55),
-                        elevation: 0,
-                      ),
-                      child: Text(
-                        "Sign Up",
-                        style: TextStyle(
-                          color: AppColors().creamBg,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
                     ),
                   ),
                   SizedBox(height: context.screenHeight * 0.03),
