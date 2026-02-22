@@ -34,7 +34,6 @@ class _LogInScreenState extends State<LogInScreen> {
               alignment: Alignment.center,
               child: Text(
                 "Log In",
-                //textAlign: TextAlign.center,
                 style: TextStyle(
                   color: AppColors().darkGreen,
                   fontSize: 60,
@@ -54,6 +53,7 @@ class _LogInScreenState extends State<LogInScreen> {
               child: Column(
                 children: [
                   SizedBox(height: context.screenHeight * 0.15),
+                  // ------ email -----
                   SizedBox(
                     height: 60,
                     width: 300,
@@ -68,10 +68,10 @@ class _LogInScreenState extends State<LogInScreen> {
                     ),
                   ),
                   SizedBox(height: context.screenHeight * 0.02),
+                  // ------ password -----
                   SizedBox(
                     height: 60,
                     width: 300,
-
                     child: TextFieldWidget(
                       controller: passwordController,
                       hintText: "enter your password",
@@ -83,6 +83,7 @@ class _LogInScreenState extends State<LogInScreen> {
                     ),
                   ),
                   SizedBox(height: context.screenHeight * 0.08),
+                  // ------ log in button -----
                   SizedBox(
                     height: 60,
                     width: 300,
@@ -118,6 +119,7 @@ class _LogInScreenState extends State<LogInScreen> {
                     ),
                   ),
                   SizedBox(height: context.screenHeight * 0.03),
+                  // Sign up option
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -135,8 +137,9 @@ class _LogInScreenState extends State<LogInScreen> {
                         child: Text(
                           'Sign Up',
                           style: TextStyle(
-                            color: Color(0xFFFFB347),
+                            color: Color.fromARGB(255, 253, 196, 116),
                             fontSize: 15,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),

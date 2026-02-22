@@ -21,6 +21,7 @@ class Welcomescreeen extends StatelessWidget {
             height: context.screenHeight * 0.35,
             child: Column(
               children: [
+                // ----- welcome texts -----
                 Text(
                   "Welcome to Grocery",
                   textAlign: TextAlign.center,
@@ -30,18 +31,24 @@ class Welcomescreeen extends StatelessWidget {
                     fontWeight: FontWeight.w900,
                   ),
                 ),
-                Text(
-                  "fresh products",
-                  style: TextStyle(
-                    color: AppColors().darkGreen,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w300,
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "fresh products",
+                      style: TextStyle(
+                        color: AppColors().darkGreen,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w300,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
           ),
           Expanded(
+            // ----- green continer ------
             child: Container(
               height: context.screenHeight * 0.8,
               width: context.screenWidth,
@@ -55,6 +62,7 @@ class Welcomescreeen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  // ----- svg image -----
                   SvgPicture.asset(
                     "assets/images/grocery.svg",
                     height: context.screenHeight * 0.3,
@@ -64,6 +72,7 @@ class Welcomescreeen extends StatelessWidget {
                   SizedBox(
                     height: 60,
                     width: 300,
+                    // ----- start button -----
                     child: NavButton(
                       backgroundColor: AppColors().black,
                       text: "Start",

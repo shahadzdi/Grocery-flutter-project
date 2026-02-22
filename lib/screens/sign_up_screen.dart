@@ -99,6 +99,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   //   ),
                   // ),
                   SizedBox(height: context.screenHeight * 0.02),
+                  // ------ email -----
                   SizedBox(
                     height: (emailError != null) ? 85 : 60,
                     width: 300,
@@ -113,6 +114,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ),
                   SizedBox(height: context.screenHeight * 0.02),
+                  // ------ password -----
                   SizedBox(
                     height: (passwordError != null) ? 85 : 60,
                     width: 300,
@@ -126,6 +128,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       hintTextColor: AppColors().darkGreen,
                     ),
                   ),
+                  // ------confirm password -----
                   SizedBox(height: context.screenHeight * 0.02),
                   SizedBox(
                     height: (confirmPasswordError != null) ? 85 : 60,
@@ -141,6 +144,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ),
                   SizedBox(height: context.screenHeight * 0.06),
+                  // ------ sign up button -----
                   SizedBox(
                     height: 60,
                     width: 300,
@@ -154,7 +158,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               ? "Email is required"
                               : null;
                           passwordError = passwordController.text.length < 6
-                              ? "Password too short"
+                              ? "Password is too short"
                               : null;
 
                           confirmPasswordError =
@@ -186,6 +190,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ),
                   SizedBox(height: context.screenHeight * 0.03),
+                  // ------ log in option -----
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -205,6 +210,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           style: TextStyle(
                             color: Color(0xFFFFB347),
                             fontSize: 15,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),

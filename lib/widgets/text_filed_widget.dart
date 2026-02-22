@@ -28,6 +28,7 @@ class TextFieldWidget extends StatelessWidget {
       style: TextStyle(color: iconAndTextColor),
       decoration: InputDecoration(
         errorText: errorText,
+        errorStyle: TextStyle(color: AppColors().error),
         filled: true,
         fillColor: fillColor,
         prefixIcon: prefixIcon,
@@ -48,7 +49,7 @@ class TextFieldWidget extends StatelessWidget {
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20),
-          borderSide: const BorderSide(color: Colors.red, width: 2),
+          borderSide: BorderSide(color: AppColors().error, width: 2),
         ),
       ),
     );

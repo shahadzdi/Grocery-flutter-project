@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:grocery/constants/colors.dart';
 import 'package:grocery/data/products.dart';
-import 'package:grocery/extensions/screen_size.dart';
 import 'package:grocery/models/groceries_model.dart';
-import 'package:grocery/services/database.dart';
 import 'package:grocery/widgets/bottom_nav_bar.dart';
 import 'package:grocery/widgets/offer_box.dart';
+import 'package:grocery/widgets/product_card.dart';
 import 'package:grocery/widgets/text_filed_widget.dart';
 
 class ProductsListScreen extends StatefulWidget {
@@ -41,20 +40,23 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
         ),
         leading: Icon(Icons.menu, color: AppColors().creamBg, size: 30),
         backgroundColor: AppColors().darkGreen,
-        //centerTitle: true,
       ),
+
       backgroundColor: AppColors().darkGreen,
+
       body: Padding(
         padding: const EdgeInsets.only(top: 30, left: 25, right: 25),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // ----- search -----
               Text(
                 "find your daily fresh grocery",
                 style: TextStyle(color: AppColors().lightGrenn, fontSize: 20),
               ),
               SizedBox(height: 20),
+
               Center(
                 child: SizedBox(
                   height: 60,
@@ -69,144 +71,28 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
                   ),
                 ),
               ),
+
               SizedBox(height: 30),
 
+              // ----- offer boxs -----
               OffersBox(),
 
-              SizedBox(height: 30),
-              
+              SizedBox(height: 40),
+              // (((((((((((((Categories list)))))))))))))
+
+              // ----- products list -----
               GridView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: products.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
-                  childAspectRatio: 0.7,
-                  crossAxisSpacing: 12,
-                  mainAxisSpacing: 12,
+                  childAspectRatio: 0.75,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
                 ),
                 itemBuilder: (context, index) {
-                  return Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadiusGeometry.circular(20),
-                      color: AppColors().creamBg,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          child: Center(
-                            child: Image.network(
-                              products[index].thumbnail ?? 'no image',
-                              fit: BoxFit.contain,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            left: 10,
-                            right: 10,
-                            bottom: 10,
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                products[index].title ?? 'no title',
-                                style: TextStyle(
-                                  fontSize: context.screenHeight * 0.016, // 16
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Text(
-                                products[index].stock! == 0
-                                    ? "Out of stock"
-                                    : products[index].stock! < 10
-                                    ? "Low stock"
-                                    : "",
-                                style: TextStyle(
-                                  fontSize: context.screenHeight * 0.01, //12
-                                  color:
-                                      products[index].stock! == 0 ||
-                                          products[index].stock! < 10
-                                      ? Colors.red.shade400
-                                      : Colors.black,
-                                ),
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    "\$ ${products[index].price ?? "unknouwn price"}",
-                                    style: TextStyle(
-                                      fontSize:
-                                          context.screenHeight * 0.016, // 16
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  products[index].stock! == 0
-                                      ? SizedBox()
-                                      : InkWell(
-                                          onTap: () {
-                                            DataBase().addToCart(
-                                              productId:
-                                                  products[index].id ?? 0,
-                                              price: products[index].price ?? 0,
-                                            );
-                                            ScaffoldMessenger.of(
-                                              context,
-                                            ).showSnackBar(
-                                              SnackBar(
-                                                content: Text(
-                                                  '1 ${products[index].title ?? ""} added',
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                    color:
-                                                        AppColors().darkGreen,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                                backgroundColor:
-                                                    AppColors().orange,
-                                                behavior:
-                                                    SnackBarBehavior.floating,
-                                                width: 150,
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(20),
-                                                ),
-                                                duration: const Duration(
-                                                  seconds: 1,
-                                                ),
-                                              ),
-                                            );
-                                          },
-                                          child: Container(
-                                            padding: const EdgeInsets.all(6),
-                                            height:
-                                                context.screenHeight * 0.035,
-                                            width: context.screenHeight * 0.035,
-                                            decoration: BoxDecoration(
-                                              color: AppColors().green,
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                            ),
-                                            child: Icon(
-                                              Icons.add,
-                                              color: Colors.white,
-                                              size: context.screenHeight * 0.02,
-                                            ),
-                                          ),
-                                        ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
+                  return ProductCard(products: products[index]);
                 },
               ),
             ],
