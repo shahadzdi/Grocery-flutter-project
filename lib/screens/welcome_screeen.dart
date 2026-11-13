@@ -6,6 +6,7 @@ import 'package:grocery/extensions/screen_size.dart';
 import 'package:grocery/screens/log_in_screen.dart';
 import 'package:grocery/widgets/nav_button.dart';
 
+/// Welcome screen: first screen of the app, with a button to go to log in.
 class Welcomescreeen extends StatelessWidget {
   const Welcomescreeen({super.key});
 

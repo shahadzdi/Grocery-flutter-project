@@ -1,3 +1,7 @@
+// NOTE: Earlier version of the app. Products were fetched from the dummyjson API.
+// The same data is now stored locally in data/products.dart (LocalProducts),
+// so the code below is kept commented out for reference.
+
 // import 'dart:convert';
 
 // import 'package:grocery/models/groceries_model.dart';

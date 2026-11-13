@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:grocery/constants/colors.dart';
 
+/// Static promotion banner: gradient background with text and an image.
 class OffersBox extends StatelessWidget {
   const OffersBox({super.key});
 
@@ -17,8 +18,7 @@ class OffersBox extends StatelessWidget {
             AppColors().lightGrenn,
             Colors.orangeAccent.shade100,
 
-            //AppColors().orange,
-          ], //[AppColors().green, Colors.lightGreen.shade200],
+          ],
         ),
         borderRadius: BorderRadius.circular(25),
       ),

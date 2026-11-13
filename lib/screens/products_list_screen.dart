@@ -7,6 +7,7 @@ import 'package:grocery/widgets/offer_box.dart';
 import 'package:grocery/widgets/product_card.dart';
 import 'package:grocery/widgets/text_filed_widget.dart';
 
+/// Main screen: search bar, offer banner and a grid of all products.
 class ProductsListScreen extends StatefulWidget {
   const ProductsListScreen({super.key});
 
@@ -21,6 +22,7 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
   @override
   void initState() {
     super.initState();
+    // When the screen opens, convert the local product data (maps) into GroceriesModel objects.
     for (var element in LocalProducts.products) {
       products.add(GroceriesModel.fromjson(element));
     }
@@ -80,7 +82,7 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
               SizedBox(height: 40),
               // (((((((((((((Categories list)))))))))))))
 
-              // ----- products list -----
+              // ----- products list (3-column grid) -----
               GridView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),

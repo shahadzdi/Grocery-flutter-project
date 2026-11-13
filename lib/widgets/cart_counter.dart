@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:grocery/constants/colors.dart';
 import 'package:grocery/extensions/screen_size.dart';
 
+/// Small round button (e.g. + or -). It receives an icon and the function to run when pressed.
 class CartCounter extends StatelessWidget {
   final IconData icon;
   final VoidCallback func;

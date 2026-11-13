@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// All app colors in one place, so the design stays consistent across screens.
 class AppColors {
   final darkGreen = Color.fromARGB(255, 47, 83, 65);
   final green = Color(0xFF6A8E4E);

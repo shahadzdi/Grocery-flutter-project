@@ -7,6 +7,7 @@ import 'package:grocery/services/database.dart';
 import 'package:grocery/widgets/nav_button.dart';
 import 'package:grocery/widgets/text_filed_widget.dart';
 
+/// Sign up screen: email, password and password confirmation.
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
 
@@ -17,6 +18,7 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  // Name controllers (disabled for now, used by the name fields below).
   //final firstNameController = TextEditingController();
   //final lastNameController = TextEditingController();
   final confirmPasswordController = TextEditingController();
@@ -73,6 +75,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
               child: Column(
                 children: [
                   SizedBox(height: context.screenHeight * 0.1),
+                  // NOTE: First and last name fields are disabled for now.
+                  // To enable them, uncomment these fields and their controllers above.
+
                   // SizedBox(
                   //   height: 60,
                   //   width: 300,
@@ -128,8 +133,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       hintTextColor: AppColors().darkGreen,
                     ),
                   ),
-                  // ------confirm password -----
                   SizedBox(height: context.screenHeight * 0.02),
+                  // ------confirm password -----
                   SizedBox(
                     height: (confirmPasswordError != null) ? 85 : 60,
                     width: 300,
@@ -152,6 +157,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       text: "Sign Up",
                       textColor: AppColors().creamBg,
                       backgroundColor: AppColors().black,
+                      // Validate the inputs: email is required, password must be at least 6 characters,
+                      // and both passwords must match. If valid, create the account with Supabase.
                       onPressed: () async {
                         setState(() {
                           emailError = emailController.text.isEmpty

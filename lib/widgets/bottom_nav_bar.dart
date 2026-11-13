@@ -4,6 +4,7 @@ import 'package:grocery/extensions/nav.dart';
 import 'package:grocery/screens/products_list_screen.dart';
 import 'package:grocery/screens/shopping_cart.dart';
 
+/// Bottom navigation bar. Only the products and cart tabs are implemented for now.
 class BottomNavBar extends StatelessWidget {
   final int currentIndex;
   const BottomNavBar({super.key, required this.currentIndex});
@@ -24,6 +25,7 @@ class BottomNavBar extends StatelessWidget {
         showSelectedLabels: false,
         backgroundColor: AppColors().green,
         onTap: (index) {
+          // Do nothing if the user taps the tab they are already on.
           if (index == currentIndex) {
             return;
           }

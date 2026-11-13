@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:grocery/constants/colors.dart';
 
+/// Reusable styled text field, used in the log in, sign up and search fields.
 class TextFieldWidget extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;

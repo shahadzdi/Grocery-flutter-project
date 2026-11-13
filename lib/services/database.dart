@@ -1,5 +1,6 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+/// Handles all Supabase operations: authentication and the cart table.
 class DataBase {
   final supabase = Supabase.instance.client;
 
@@ -13,8 +14,11 @@ class DataBase {
     await supabase.auth.signInWithPassword(email: email, password: password);
   }
 
+  /// Adds a product to the logged-in user's cart.
+  /// If it is already in the cart, its quantity is increased by 1.
   Future addToCart({required int productId, required double price}) async {
     final userId = supabase.auth.currentUser?.id;
+    // No logged-in user, so do nothing.
     if (userId == null) {
       return;
     }
@@ -25,6 +29,7 @@ class DataBase {
         .eq('user_id', userId) // equals filter
         .eq('product_id', productId);
 
+    // Product is not in the cart yet: create a new row.
     if (response.isEmpty) {
       await supabase.from('cart').insert({
         'user_id': userId,
@@ -32,6 +37,7 @@ class DataBase {
         'price': price,
       });
     } else {
+      // Product already in the cart: increase the quantity.
       int quantity = response[0]['quantity'];
       await supabase
           .from('cart')
@@ -39,7 +45,9 @@ class DataBase {
           .eq('id', response[0]['id']);
     }
   }
-
+  
+  /// Decreases the quantity of a product by 1.
+  /// If the quantity is 1, the item is removed from the cart.
   Future removeFromCart({required int productId}) async {
     final userId = supabase.auth.currentUser?.id;
     if (userId == null) {

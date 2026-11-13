@@ -8,6 +8,7 @@ import 'package:grocery/services/database.dart';
 import 'package:grocery/widgets/nav_button.dart';
 import 'package:grocery/widgets/text_filed_widget.dart';
 
+/// Log in screen: email and password fields.
 class LogInScreen extends StatefulWidget {
   const LogInScreen({super.key});
 
@@ -91,6 +92,8 @@ class _LogInScreenState extends State<LogInScreen> {
                       text: "Log In",
                       backgroundColor: AppColors().black,
                       textColor: Colors.white,
+                      // Check that both fields are filled, then log in with Supabase.
+                      // On success go to the products screen, otherwise show the error.
                       onPressed: () async {
                         if (emailController.text.isEmpty ||
                             passwordController.text.isEmpty) {

@@ -6,6 +6,7 @@ import 'package:grocery/models/groceries_model.dart';
 import 'package:grocery/services/database.dart';
 import 'package:grocery/widgets/cart_counter.dart';
 
+/// One row in the cart: product image, name, price for the chosen quantity, and +/- buttons.
 class CartItem extends StatelessWidget {
   const CartItem({super.key, required this.item});
 
@@ -59,6 +60,7 @@ class CartItem extends StatelessWidget {
               Row(
                 children: [
                   CartCounter(
+                    // Decrease the quantity (the item is deleted when it reaches 0).
                     icon: Icons.remove,
                     func: () => DataBase().removeFromCart(
                       productId: item['product_id'],

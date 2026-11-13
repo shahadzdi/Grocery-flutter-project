@@ -5,6 +5,7 @@ import 'package:grocery/widgets/bottom_nav_bar.dart';
 import 'package:grocery/widgets/cart_item.dart';
 import 'package:grocery/widgets/nav_button.dart';
 
+/// Cart screen: shows the user's cart items and the total price.
 class ShoppingCart extends StatefulWidget {
   const ShoppingCart({super.key});
 
@@ -13,7 +14,7 @@ class ShoppingCart extends StatefulWidget {
 }
 
 class _ShoppingCartState extends State<ShoppingCart> {
-  // ----- calc total price -----
+  // ----- calc total price: sum of (price x quantity) for each item -----
   double calculateTotal(List<Map> cart) {
     double totalPrice = 0;
     for (var item in cart) {
@@ -76,6 +77,8 @@ class _ShoppingCartState extends State<ShoppingCart> {
 
               // ----- cart list -----
               Expanded(
+                // Listens to the "cart" table in Supabase in real time,
+                // so the list updates automatically when items change.
                 child: StreamBuilder(
                   stream: DataBase().supabase
                       .from('cart')
@@ -90,6 +93,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
                       );
                     }
 
+                    // Current cart rows from the database.
                     final cart = asyncSnapshot.data!;
                     double total = calculateTotal(cart);
 
@@ -157,6 +161,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
                                   text: "Checkout",
                                   backgroundColor: AppColors().orange,
                                   textColor: AppColors().darkGreen,
+                                  // Checkout is not implemented yet.
                                   onPressed: () {},
                                 ),
                               ),

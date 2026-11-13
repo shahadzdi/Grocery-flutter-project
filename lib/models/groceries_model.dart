@@ -1,10 +1,10 @@
+/// Represents one grocery product (id, title, description, stock, price, image).
 class GroceriesModel {
   int? id;
   String? title;
   String? description;
   double? stock;
   double? price;
-  //double? rating;
   String? thumbnail;
 
   GroceriesModel({
@@ -13,10 +13,10 @@ class GroceriesModel {
     this.description,
     this.stock,
     this.price,
-    //this.rating,
     this.thumbnail,
   });
 
+  /// Creates a product from a JSON map. Stock and price are converted to double.
   factory GroceriesModel.fromjson(Map<String, dynamic> json) {
     return GroceriesModel(
       id: json['id'],
@@ -25,7 +25,6 @@ class GroceriesModel {
       stock: (json['stock'] as num).toDouble(),
       price: (json['price'] as num).toDouble(),
       thumbnail: json['thumbnail'],
-      //rating: json['rating'],
     );
   }
 }

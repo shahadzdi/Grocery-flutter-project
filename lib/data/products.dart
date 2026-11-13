@@ -1,3 +1,5 @@
+/// Local list of grocery products (originally fetched from the dummyjson API).
+/// Each product is a map that is converted to a GroceriesModel in the app.
 class LocalProducts {
   static List<Map<String, dynamic>> products = [
     {

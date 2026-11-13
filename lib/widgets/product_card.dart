@@ -4,6 +4,7 @@ import 'package:grocery/extensions/screen_size.dart';
 import 'package:grocery/models/groceries_model.dart';
 import 'package:grocery/services/database.dart';
 
+/// Card for one product in the grid: image, name, stock status, price and an add-to-cart button.
 class ProductCard extends StatelessWidget {
   const ProductCard({super.key, required this.products});
 
@@ -41,6 +42,7 @@ class ProductCard extends StatelessWidget {
                   ),
                 ),
                 Text(
+                  // Stock status text: "Out of stock" if 0, "Low stock" if less than 10.
                   products.stock! == 0
                       ? "Out of stock"
                       : products.stock! < 10
@@ -64,10 +66,12 @@ class ProductCard extends StatelessWidget {
                       ),
                     ),
                     SizedBox(width: 8),
+                    // Hide the add button when the product is out of stock.
                     products.stock! == 0
                         ? SizedBox()
                         : InkWell(
                             onTap: () {
+                              // Add the product to the cart in Supabase, then show a short confirmation message.
                               DataBase().addToCart(
                                 productId: products.id ?? 0,
                                 price: products.price ?? 0,

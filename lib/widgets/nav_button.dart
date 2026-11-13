@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// Reusable full-width button. The text, colors and action are passed in.
 class NavButton extends StatelessWidget {
   final String text;
   final Color backgroundColor;
@@ -7,18 +8,11 @@ class NavButton extends StatelessWidget {
   final VoidCallback onPressed;
   const NavButton({
     super.key,
-    // required this.emailController,
-    // required this.passwordController,
-    // required this.mounted,
     required this.text,
     required this.backgroundColor,
     required this.textColor,
     required this.onPressed,
   });
-
-  // final TextEditingController emailController;
-  // final TextEditingController passwordController;
-  // final bool mounted;
 
   @override
   Widget build(BuildContext context) {
